@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\CloudflareLogin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -27,7 +28,7 @@ class BackendPanelProvider extends PanelProvider
             ->default()
             ->id('backend')
             ->path('')
-            ->login()
+            ->login(CloudflareLogin::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
