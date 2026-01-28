@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Load nvm
+export NVM_DIR=~/.nvm
+source ~/.nvm/nvm.sh
+
 echo "Deployment started ..."
 
 # Enter maintenance mode or return true
