@@ -2,10 +2,13 @@
 
 namespace App\Filament\Pages\Auth;
 
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Validation\ValidationException;
 use l3aro\FilamentTurnstile\Facades\FilamentTurnstileFacade;
 use l3aro\FilamentTurnstile\Forms\Turnstile;
 use Filament\Auth\Pages\Login as AuthLogin;
+use SensitiveParameter;
 
 class CloudflareLogin extends AuthLogin
 {
@@ -13,7 +16,7 @@ class CloudflareLogin extends AuthLogin
     {
         return $schema
             ->components([
-                $this->getEmailFormComponent(),
+                $this->getUsernameFormComponent(),
                 $this->getPasswordFormComponent(),
                 Turnstile::make('captcha')
                     ->size('flexible'),
@@ -21,10 +24,28 @@ class CloudflareLogin extends AuthLogin
             ->statePath('data');
     }
 
+    protected function getUsernameFormComponent() {
+        return TextInput::make('username')
+            ->label(__('user.username'))
+            ->required()
+            ->autocomplete()
+            ->autofocus();
+    }
+
+    protected function getCredentialsFromFormData(#[SensitiveParameter] array $data): array
+    {
+        return [
+            'username' => strtolower($data['username']),
+            'password' => $data['password'],
+        ];
+    }
+
     protected function throwFailureValidationException(): never
     {
         $this->dispatch(FilamentTurnstileFacade::getResetEventName());
 
-        parent::throwFailureValidationException();
+        throw ValidationException::withMessages([
+            'data.username' => __('user.failed_login'),
+        ]);
     }
 }
