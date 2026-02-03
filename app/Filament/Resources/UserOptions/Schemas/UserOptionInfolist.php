@@ -47,9 +47,13 @@ class UserOptionInfolist
                     ->placeholder('-')
                     ->columnSpanFull(),
                 TextEntry::make('created_at')
+                    ->label('general.created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->placeholder('-'),
                 TextEntry::make('updated_at')
+                    ->label('general.updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->placeholder('-'),
             ]);

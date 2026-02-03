@@ -38,10 +38,14 @@ class UserOptionsTable
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()
+                    ->label('general.created_at')
+                    ->translateLabel()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->dateTime()
+                    ->label('general.updated_at')
+                    ->translateLabel()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
