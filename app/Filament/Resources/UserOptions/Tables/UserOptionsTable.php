@@ -17,14 +17,24 @@ class UserOptionsTable
         return $table
             ->columns([
                 TextColumn::make('user.username')
+                    ->label('user.username')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('attending')
+                    ->label('user-option.attending')
+                    ->translateLabel()
                     ->badge(),
                 IconColumn::make('allergies')
+                    ->label('user-option.allergies')
+                    ->translateLabel()
                     ->boolean(),
                 IconColumn::make('drinking_alcohol')
+                    ->label('user-option.drinking_alcohol')
+                    ->translateLabel()
                     ->boolean(),
                 IconColumn::make('bringing_fursuit')
+                    ->label('user-option.bringing_fursuit')
+                    ->translateLabel()
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()
