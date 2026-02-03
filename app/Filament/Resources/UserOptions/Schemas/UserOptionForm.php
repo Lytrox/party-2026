@@ -22,7 +22,11 @@ class UserOptionForm
                 Select::make('attending')
                     ->label('user-option.attending')
                     ->translateLabel()
-                    ->options(['yes' => 'Yes', 'no' => 'No', 'maybe' => 'Maybe'])
+                    ->options([
+                        'yes' => __('user-option.attending_options.yes'),
+                        'no' => __('user-option.attending_options.no'),
+                        'maybe' => __('user-option.attending_options.maybe'),
+                    ])
                     ->default('maybe')
                     ->required(),
                 Toggle::make('allergies')

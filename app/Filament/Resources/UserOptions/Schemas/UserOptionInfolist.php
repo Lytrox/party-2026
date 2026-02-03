@@ -18,6 +18,12 @@ class UserOptionInfolist
                 TextEntry::make('attending')
                     ->label('user-option.attending')
                     ->translateLabel()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'yes' => __('user-option.attending_options.yes'),
+                        'no' => __('user-option.attending_options.no'),
+                        'maybe' => __('user-option.attending_options.maybe'),
+                        default => $state,
+                    })
                     ->badge(),
                 IconEntry::make('allergies')
                     ->label('user-option.allergies')

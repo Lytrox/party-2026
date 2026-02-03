@@ -11,4 +11,9 @@ return [
     'bringing_fursuit' => 'Mitbringen eines Fursuits',
     'comments' => 'Kommentare',
     'comments_helper' => 'Teile uns gerne weitere Kommentare oder Wünsche bezüglich der Veranstaltung mit.',
+    'attending_options' => [
+        'yes' => 'Ja',
+        'no' => 'Nein',
+        'maybe' => 'Vielleicht',
+    ],
 ];

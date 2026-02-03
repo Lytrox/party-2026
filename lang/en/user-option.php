@@ -11,4 +11,9 @@ return [
     'bringing_fursuit' => 'Bringing Fursuit',
     'comments' => 'Comments',
     'comments_helper' => 'Feel free to share any additional comments or requests you may have regarding the event.',
+    'attending_options' => [
+        'yes' => 'Yes',
+        'no' => 'No',
+        'maybe' => 'Maybe',
+    ],
 ];
