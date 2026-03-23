@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Filament\Resources\Rsvps;
+
+use App\Filament\Resources\Rsvps\Pages\CreateRsvp;
+use App\Filament\Resources\Rsvps\Pages\EditRsvp;
+use App\Filament\Resources\Rsvps\Pages\ListRsvps;
+use App\Filament\Resources\Rsvps\Schemas\RsvpForm;
+use App\Filament\Resources\Rsvps\Tables\RsvpsTable;
+use App\Models\Rsvp;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+
+class RsvpResource extends Resource
+{
+    protected static ?string $model = Rsvp::class;
+
+    protected static ?string $slug = 'registrations';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+
+    public static function getModelLabel(): string
+    {
+        return __('Registration');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Registrations');
+    }
+
+    public static function form(Schema $schema): Schema
+    {
+        return RsvpForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return RsvpsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListRsvps::route('/'),
+            'create' => CreateRsvp::route('/create'),
+            'edit' => EditRsvp::route('/{record}/edit'),
+        ];
+    }
+}
