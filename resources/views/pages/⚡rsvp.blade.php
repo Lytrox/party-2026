@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Rsvp;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -39,8 +41,24 @@ new #[Title('Registration')] class extends Component {
         }
     }
 
+    #[Computed]
+    public function registrationDeadline(): ?Carbon
+    {
+        $deadline = config('party.registration_deadline');
+
+        return $deadline ? Carbon::parse($deadline) : null;
+    }
+
+    #[Computed]
+    public function registrationClosed(): bool
+    {
+        return $this->registrationDeadline !== null && Carbon::now()->isAfter($this->registrationDeadline);
+    }
+
     public function save(): void
     {
+        abort_if($this->registrationClosed, 403);
+
         $this->validate([
             'badgeName' => ['required', 'string', 'max:100'],
             'attending' => ['nullable', 'in:,0,1'],
@@ -93,6 +111,26 @@ new #[Title('Registration')] class extends Component {
         </div>
     </div>
 
+    {{-- Deadline notice --}}
+    @if($this->registrationDeadline !== null)
+        @if($this->registrationClosed)
+            <div class="flex items-center gap-3 rounded-2xl bg-red-50 px-5 py-4 ring-1 ring-red-200 dark:bg-red-950/40 dark:ring-red-800">
+                <flux:icon name="lock-closed" class="size-5 shrink-0 text-red-500 dark:text-red-400" />
+                <flux:text class="font-medium text-red-700 dark:text-red-300">{{ __('Registration is closed.') }}</flux:text>
+            </div>
+        @else
+            <div class="flex items-center gap-3 rounded-2xl bg-amber-50 px-5 py-4 ring-1 ring-amber-200 dark:bg-amber-950/40 dark:ring-amber-800">
+                <flux:icon name="clock" class="size-5 shrink-0 text-amber-500 dark:text-amber-400" />
+                <flux:text class="font-medium text-amber-700 dark:text-amber-300">
+                    {{ __('Registration closes on :date at :time.', [
+                        'date' => $this->registrationDeadline->isoFormat('LL'),
+                        'time' => $this->registrationDeadline->format('H:i'),
+                    ]) }}
+                </flux:text>
+            </div>
+        @endif
+    @endif
+
     <form wire:submit="save" class="flex flex-col gap-4">
 
 
@@ -107,7 +145,7 @@ new #[Title('Registration')] class extends Component {
                     <flux:text class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">{{ __('Attendance') }}</flux:text>
                     <flux:field>
                         <flux:label>{{ __('Are you attending?') }}</flux:label>
-                        <flux:select wire:model="attending">
+                        <flux:select wire:model="attending" :disabled="$this->registrationClosed">
                             <flux:select.option value="">{{ __('Not decided yet') }}</flux:select.option>
                             <flux:select.option value="1">{{ __('Yes, I\'ll be there!') }}</flux:select.option>
                             <flux:select.option value="0">{{ __('No, I can\'t make it') }}</flux:select.option>
@@ -130,7 +168,7 @@ new #[Title('Registration')] class extends Component {
                     <flux:field>
                         <flux:label :badge="__('Required')">{{ __('Badge name') }}</flux:label>
                         <flux:description>{{ __('This name will be printed on your badge.') }}</flux:description>
-                        <flux:input wire:model="badgeName" maxlength="100" required />
+                        <flux:input wire:model="badgeName" maxlength="100" required :disabled="$this->registrationClosed" />
                         <flux:error name="badgeName" />
                     </flux:field>
                 </div>
@@ -151,13 +189,13 @@ new #[Title('Registration')] class extends Component {
                         <flux:text class="text-xs font-semibold uppercase tracking-wider text-neutral-400">{{ __('Allergies & Intolerances') }}</flux:text>
                         <flux:field>
                             <flux:label>{{ __('Do you have any allergies and/or intolerances?') }}</flux:label>
-                            <flux:switch wire:model.live="hasAllergies" />
+                            <flux:switch wire:model.live="hasAllergies" :disabled="$this->registrationClosed" />
                             <flux:error name="hasAllergies" />
                         </flux:field>
                         @if ($hasAllergies)
                             <flux:field>
                                 <flux:label :badge="__('Required')">{{ __('Please describe your allergies') }}</flux:label>
-                                <flux:textarea wire:model="allergies" rows="3" :placeholder="__('e.g. nuts, gluten, lactose...')" />
+                                <flux:textarea wire:model="allergies" rows="3" :placeholder="__('e.g. nuts, gluten, lactose...')" :disabled="$this->registrationClosed" />
                                 <flux:error name="allergies" />
                             </flux:field>
                         @endif
@@ -176,11 +214,11 @@ new #[Title('Registration')] class extends Component {
                         <flux:text class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">{{ __('Diet') }}</flux:text>
                         <div class="space-y-3">
                             <flux:field>
-                                <flux:checkbox wire:model.live="isVegetarian" :label="__('I am vegetarian')" />
+                                <flux:checkbox wire:model.live="isVegetarian" :label="__('I am vegetarian')" :disabled="$this->registrationClosed" />
                                 <flux:error name="isVegetarian" />
                             </flux:field>
                             <flux:field>
-                                <flux:checkbox wire:model.live="isVegan" :label="__('I am vegan')" />
+                                <flux:checkbox wire:model.live="isVegan" :label="__('I am vegan')" :disabled="$this->registrationClosed" />
                                 <flux:error name="isVegan" />
                             </flux:field>
                         </div>
@@ -202,11 +240,11 @@ new #[Title('Registration')] class extends Component {
                     <flux:field>
                         <flux:label>{{ __('Are you bringing anything?') }}</flux:label>
                         <flux:description>{{ __('e.g. a cake, a hookah, snacks, drinks...') }}</flux:description>
-                        <flux:textarea wire:model="bringing" rows="2" :placeholder="__('Tell us what you\'d like to bring (optional)')" />
+                        <flux:textarea wire:model="bringing" rows="2" :placeholder="__('Tell us what you\'d like to bring (optional)')" :disabled="$this->registrationClosed" />
                         <flux:error name="bringing" />
                     </flux:field>
                     <flux:field>
-                        <flux:checkbox wire:model="bringingMusicEquipment" :label="__('I want to bring music equipment (speakers, DJ setup, etc.)')" />
+                        <flux:checkbox wire:model="bringingMusicEquipment" :label="__('I want to bring music equipment (speakers, DJ setup, etc.)')" :disabled="$this->registrationClosed" />
                         <flux:error name="bringingMusicEquipment" />
                     </flux:field>
                 </div>
@@ -227,7 +265,7 @@ new #[Title('Registration')] class extends Component {
                         <flux:text class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">{{ __('Alcohol') }}</flux:text>
                         <flux:field>
                             <flux:label>{{ __('Will you be drinking alcohol?') }}</flux:label>
-                            <flux:switch wire:model="drinkingAlcohol" />
+                            <flux:switch wire:model="drinkingAlcohol" :disabled="$this->registrationClosed" />
                             <flux:error name="drinkingAlcohol" />
                         </flux:field>
                     </div>
@@ -245,7 +283,7 @@ new #[Title('Registration')] class extends Component {
                         <flux:text class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">{{ __('Fursuit') }}</flux:text>
                         <flux:field>
                             <flux:label>{{ __('Are you bringing your fursuit?') }}</flux:label>
-                            <flux:switch wire:model="bringingFursuit" />
+                            <flux:switch wire:model="bringingFursuit" :disabled="$this->registrationClosed" />
                             <flux:error name="bringingFursuit" />
                         </flux:field>
                     </div>
@@ -256,7 +294,7 @@ new #[Title('Registration')] class extends Component {
 
         {{-- Submit --}}
         <div class="flex items-center gap-4">
-            <flux:button variant="primary" type="submit" icon="check" class="px-8">
+            <flux:button variant="primary" type="submit" icon="check" class="px-8" :disabled="$this->registrationClosed">
                 {{ __('Save registration') }}
             </flux:button>
             <x-action-message on="rsvp-saved" class="text-sm text-emerald-600 dark:text-emerald-400">

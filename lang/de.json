@@ -107,6 +107,8 @@
     "RSVP": "RSVP",
     "Overview": "Übersicht",
     "Register for the party": "Zur Party anmelden",
+    "Registration closes on :date at :time.": "Die Anmeldung ist nur bis zum :date um :time Uhr möglich.",
+    "Registration is closed.": "Die Anmeldefrist ist abgelaufen.",
     "Registrations": "Anmeldungen",
     "Register now": "Jetzt anmelden",
     "Registration": "Anmeldung",

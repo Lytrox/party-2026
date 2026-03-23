@@ -107,6 +107,8 @@
     "RSVP": "RSVP",
     "Overview": "Overview",
     "Register for the party": "Register for the party",
+    "Registration closes on :date at :time.": "Registration closes on :date at :time.",
+    "Registration is closed.": "Registration is closed.",
     "Registrations": "Registrations",
     "Register now": "Register now",
     "Registration": "Registration",

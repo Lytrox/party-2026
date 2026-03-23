@@ -19,6 +19,8 @@ return [
 
     'time_end' => env('PARTY_TIME_END', '04:00'),
 
+    'registration_deadline' => env('PARTY_REGISTRATION_DEADLINE'),
+
     'location' => [
         'name' => env('PARTY_LOCATION_NAME', 'Venue TBD'),
         'address' => env('PARTY_LOCATION_ADDRESS', 'Address TBD'),
