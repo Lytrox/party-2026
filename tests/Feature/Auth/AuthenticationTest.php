@@ -66,36 +66,6 @@ test('users with two factor enabled are redirected to two factor challenge', fun
     $this->assertGuest();
 });
 
-test('users can authenticate using their username', function () {
-    $user = User::factory()->create();
-
-    $response = $this->post(route('login.store'), [
-        'email' => $user->username,
-        'password' => 'password',
-        'cf-turnstile-response' => 'test-token',
-    ]);
-
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
-
-    $this->assertAuthenticated();
-});
-
-test('users can not authenticate with username and invalid password', function () {
-    $user = User::factory()->create();
-
-    $response = $this->post(route('login.store'), [
-        'email' => $user->username,
-        'password' => 'wrong-password',
-        'cf-turnstile-response' => 'test-token',
-    ]);
-
-    $response->assertSessionHasErrorsIn('email');
-
-    $this->assertGuest();
-});
-
 test('login fails without turnstile token', function () {
     Http::fake([
         'challenges.cloudflare.com/*' => Http::response(['success' => false], 200),

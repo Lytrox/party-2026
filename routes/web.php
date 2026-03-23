@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::livewire('registration', 'pages::rsvp')->name('registration');
     Route::livewire('faq', 'pages::faq')->name('faq');
+    Route::livewire('house-rules', 'pages::house-rules')->name('house-rules');
 });
 
 require __DIR__.'/settings.php';

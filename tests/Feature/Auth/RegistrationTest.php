@@ -26,7 +26,6 @@ test('new users can register', function () {
 
     $response = $this->withSession(['can_register' => true])->post(route('register.store'), [
         'name' => 'John Doe',
-        'username' => 'johndoe',
         'email' => 'test@example.com',
         'password' => 'password',
         'password_confirmation' => 'password',

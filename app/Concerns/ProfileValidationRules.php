@@ -16,7 +16,6 @@ trait ProfileValidationRules
     {
         return [
             'name' => $this->nameRules(),
-            'username' => $this->usernameRules($userId),
             'email' => $this->emailRules($userId),
         ];
     }
@@ -29,24 +28,6 @@ trait ProfileValidationRules
     protected function nameRules(): array
     {
         return ['required', 'string', 'max:255'];
-    }
-
-    /**
-     * Get the validation rules used to validate usernames.
-     *
-     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
-     */
-    protected function usernameRules(?int $userId = null): array
-    {
-        return [
-            'required',
-            'string',
-            'max:255',
-            'regex:/^[a-zA-Z0-9_]+$/',
-            $userId === null
-                ? Rule::unique(User::class)
-                : Rule::unique(User::class)->ignore($userId),
-        ];
     }
 
     /**

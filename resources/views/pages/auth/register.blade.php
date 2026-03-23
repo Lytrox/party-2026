@@ -7,28 +7,20 @@
 
         <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-6">
             @csrf
-            <!-- Name -->
-            <flux:input
-                name="name"
-                :label="__('Name')"
-                :value="old('name')"
-                type="text"
-                required
-                autofocus
-                autocomplete="name"
-                :placeholder="__('Name')"
-            />
-
-            <!-- Username -->
-            <flux:input
-                name="username"
-                :label="__('Username')"
-                :value="old('username')"
-                type="text"
-                required
-                autocomplete="username"
-                :placeholder="__('Your username')"
-            />
+            <!-- Displayed name -->
+            <div>
+                <flux:input
+                    name="name"
+                    :label="__('Displayed name')"
+                    :value="old('name')"
+                    type="text"
+                    required
+                    autofocus
+                    autocomplete="name"
+                    :placeholder="__('Displayed name')"
+                />
+                <flux:text class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ __('This is not the name that will be printed on your badge. You can set your badge name on the party registration page.') }}</flux:text>
+            </div>
 
             <!-- Email Address -->
             <flux:input

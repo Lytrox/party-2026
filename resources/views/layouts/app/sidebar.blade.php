@@ -30,6 +30,10 @@
                     <flux:sidebar.item icon="question-mark-circle" :href="route('faq')" :current="request()->routeIs('faq')" wire:navigate>
                         {{ __('FAQ') }}
                     </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="clipboard-document-list" :href="route('house-rules')" :current="request()->routeIs('house-rules')" wire:navigate>
+                        {{ __('House Rules') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 

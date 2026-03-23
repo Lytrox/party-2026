@@ -47,11 +47,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::createUsersUsing(CreateNewUser::class);
 
         Fortify::authenticateUsing(function (Request $request) {
-            $login = $request->input('email');
-
-            $user = filter_var($login, FILTER_VALIDATE_EMAIL)
-                ? User::query()->where('email', $login)->first()
-                : User::query()->where('username', $login)->first();
+            $user = User::query()->where('email', $request->input('email'))->first();
 
             if ($user && Hash::check($request->input('password'), $user->password)) {
                 return $user;

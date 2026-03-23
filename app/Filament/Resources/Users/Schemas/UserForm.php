@@ -19,15 +19,10 @@ class UserForm
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('Full name'))
+                            ->label(__('Displayed name'))
+                            ->helperText(__('This is not the name that will be printed on the badge. The badge name is defined on the party registration page.'))
                             ->required()
                             ->maxLength(255),
-
-                        TextInput::make('username')
-                            ->label(__('Username'))
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true),
 
                         TextInput::make('email')
                             ->label(__('Email address'))
