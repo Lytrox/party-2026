@@ -62,5 +62,8 @@
             </div>
         </form>
 
+        <div class="text-center text-sm text-zinc-500 dark:text-zinc-400">
+            <flux:link :href="route('privacy-policy')" target="_blank">{{ __('Privacy Policy') }}</flux:link>
+        </div>
     </div>
 </x-layouts::auth>

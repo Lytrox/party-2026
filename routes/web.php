@@ -15,6 +15,8 @@ Route::get('/register-secret', function () {
     return redirect()->route('register');
 })->middleware('guest')->name('register.secret');
 
+Route::livewire('privacy-policy', 'pages::privacy-policy')->name('privacy-policy');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::livewire('registration', 'pages::rsvp')->name('registration');

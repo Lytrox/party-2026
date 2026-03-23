@@ -79,5 +79,9 @@
             <span>{{ __('Already have an account?') }}</span>
             <flux:link :href="route('login')" wire:navigate>{{ __('Log in') }}</flux:link>
         </div>
+
+        <div class="text-center text-sm text-zinc-500 dark:text-zinc-400">
+            <flux:link :href="route('privacy-policy')" target="_blank">{{ __('Privacy Policy') }}</flux:link>
+        </div>
     </div>
 </x-layouts::auth>

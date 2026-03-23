@@ -34,6 +34,10 @@
                     <flux:sidebar.item icon="clipboard-document-list" :href="route('house-rules')" :current="request()->routeIs('house-rules')" wire:navigate>
                         {{ __('House Rules') }}
                     </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="shield-check" :href="route('privacy-policy')" :current="request()->routeIs('privacy-policy')" wire:navigate>
+                        {{ __('Privacy Policy') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
