@@ -10,7 +10,7 @@ return [
             'body' => 'Diese Website wird als private Eventplattform für eine Geburtstagsparty betrieben. Die verantwortliche Person für die Datenverarbeitung im Sinne der DSGVO ist:',
             'items' => [
                 'Berat Ari',
-                'Kontakt: hello@lytrox.de',
+                'Kontakt: hello@lytrox.com',
             ],
         ],
         [
@@ -83,7 +83,7 @@ return [
         ],
         [
             'heading' => 'Kontakt',
-            'body' => 'Bei datenschutzbezogenen Fragen oder zur Ausübung deiner Rechte wende dich bitte an: hello@lytrox.de',
+            'body' => 'Bei datenschutzbezogenen Fragen oder zur Ausübung deiner Rechte wende dich bitte an: hello@lytrox.com',
         ],
     ],
 ];
