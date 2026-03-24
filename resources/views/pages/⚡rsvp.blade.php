@@ -2,6 +2,7 @@
 
 use App\Models\Rsvp;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
@@ -39,6 +40,18 @@ new #[Title('Registration')] class extends Component {
             $this->isVegetarian = $rsvp->is_vegetarian;
             $this->isVegan = $rsvp->is_vegan;
         }
+    }
+
+    #[Computed]
+    public function othersBringing(): Collection
+    {
+        return Rsvp::query()
+            ->where('user_id', '!=', Auth::id())
+            ->whereNotNull('bringing')
+            ->where('bringing', '!=', '')
+            ->where('attending', true)
+            ->with('user:id,name')
+            ->get(['user_id', 'bringing', 'badge_name']);
     }
 
     #[Computed]
@@ -250,6 +263,32 @@ new #[Title('Registration')] class extends Component {
                 </div>
             </div>
         </div>
+
+        {{-- What others are bringing --}}
+        @if($this->othersBringing->isNotEmpty())
+            <div class="relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-neutral-100 dark:bg-zinc-900 dark:ring-neutral-800">
+                <div class="absolute top-0 right-0 h-24 w-24 translate-x-6 -translate-y-6 rounded-full bg-amber-50 dark:bg-amber-900/20"></div>
+                <div class="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+                    <div class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-500 dark:bg-amber-900/30 dark:text-amber-400">
+                        <flux:icon name="eye" class="size-5" />
+                    </div>
+                    <div class="flex-1">
+                        <flux:text class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">{{ __('What others are bringing') }}</flux:text>
+                        <ul class="space-y-2">
+                            @foreach($this->othersBringing as $rsvp)
+                                <li class="flex items-start gap-2">
+                                    <flux:icon name="user-circle" class="mt-0.5 size-4 shrink-0 text-neutral-400" />
+                                    <span class="text-sm text-neutral-700 dark:text-neutral-300">
+                                        <span class="font-medium">{{ mb_substr($rsvp->badge_name ?? $rsvp->user?->name ?? '?', 0, 3) }}***</span>:
+                                        {{ $rsvp->bringing }}
+                                    </span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         {{-- Drinking & Fursuit --}}
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
