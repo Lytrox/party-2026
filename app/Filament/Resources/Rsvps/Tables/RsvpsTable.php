@@ -44,23 +44,6 @@ class RsvpsTable
                     ->label(__('Fursuit'))
                     ->boolean(),
 
-                IconColumn::make('bringing_music_equipment')
-                    ->label(__('Music equip.'))
-                    ->boolean(),
-
-                IconColumn::make('is_vegetarian')
-                    ->label(__('Vegetarian'))
-                    ->boolean(),
-
-                IconColumn::make('is_vegan')
-                    ->label(__('Vegan'))
-                    ->boolean(),
-
-                TextColumn::make('bringing')
-                    ->label(__('Bringing'))
-                    ->limit(40)
-                    ->placeholder('—'),
-
                 TextColumn::make('updated_at')
                     ->label(__('Last updated'))
                     ->dateTime()
@@ -73,14 +56,6 @@ class RsvpsTable
                 TernaryFilter::make('bringing_fursuit')
                     ->label(__('Bringing fursuit')),
 
-                TernaryFilter::make('bringing_music_equipment')
-                    ->label(__('Bringing music equipment')),
-
-                TernaryFilter::make('is_vegetarian')
-                    ->label(__('Vegetarian')),
-
-                TernaryFilter::make('is_vegan')
-                    ->label(__('Vegan')),
             ])
             ->recordActions([
                 EditAction::make(),

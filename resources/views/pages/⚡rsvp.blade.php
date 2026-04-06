@@ -55,6 +55,19 @@ new #[Title('Registration')] class extends Component {
     }
 
     #[Computed]
+    public function othersAllergies(): Collection
+    {
+        return Rsvp::query()
+            ->where('user_id', '!=', Auth::id())
+            ->where('has_allergies', true)
+            ->whereNotNull('allergies')
+            ->where('allergies', '!=', '')
+            ->where('attending', true)
+            ->with('user:id,name')
+            ->get(['user_id', 'allergies', 'badge_name']);
+    }
+
+    #[Computed]
     public function registrationDeadline(): ?Carbon
     {
         $deadline = config('party.registration_deadline');
@@ -281,6 +294,32 @@ new #[Title('Registration')] class extends Component {
                                     <span class="text-sm text-neutral-700 dark:text-neutral-300">
                                         <span class="font-medium">{{ mb_substr($rsvp->badge_name ?? $rsvp->user?->name ?? '?', 0, 3) }}***</span>:
                                         {{ $rsvp->bringing }}
+                                    </span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        {{-- Allergies of others --}}
+        @if($this->othersAllergies->isNotEmpty())
+            <div class="relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-neutral-100 dark:bg-zinc-900 dark:ring-neutral-800">
+                <div class="absolute top-0 right-0 h-24 w-24 translate-x-6 -translate-y-6 rounded-full bg-rose-50 dark:bg-rose-900/20"></div>
+                <div class="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+                    <div class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-500 dark:bg-rose-900/30 dark:text-rose-400">
+                        <flux:icon name="exclamation-triangle" class="size-5" />
+                    </div>
+                    <div class="flex-1">
+                        <flux:text class="mb-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">{{ __('Allergies & intolerances of other guests') }}</flux:text>
+                        <ul class="space-y-2">
+                            @foreach($this->othersAllergies as $rsvp)
+                                <li class="flex items-start gap-2">
+                                    <flux:icon name="user-circle" class="mt-0.5 size-4 shrink-0 text-neutral-400" />
+                                    <span class="text-sm text-neutral-700 dark:text-neutral-300">
+                                        <span class="font-medium">{{ mb_substr($rsvp->badge_name ?? $rsvp->user?->name ?? '?', 0, 3) }}***</span>:
+                                        {{ $rsvp->allergies }}
                                     </span>
                                 </li>
                             @endforeach

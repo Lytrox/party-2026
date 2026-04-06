@@ -192,5 +192,12 @@
     "What others are bringing": "Was andere mitbringen",
     "Pending Registrations": "Ausstehende Anmeldungen",
     "No pending registrations": "Keine ausstehenden Anmeldungen",
-    "All registered users have filled out their party registration.": "Alle registrierten Nutzer haben ihre Party-Anmeldung ausgefüllt."
+    "All registered users have filled out their party registration.": "Alle registrierten Nutzer haben ihre Party-Anmeldung ausgefüllt.",
+    "Dietary Requirements": "Ernährung & Unverträglichkeiten",
+    "No dietary requirements reported": "Keine Ernährungsangaben vorhanden",
+    "No guests have reported any allergies, intolerances, or dietary preferences.": "Kein Gast hat Allergien, Unverträglichkeiten oder Ernährungsvorlieben angegeben.",
+    "What guests are bringing": "Was Gäste mitbringen",
+    "Nobody is bringing anything yet": "Noch bringt niemand etwas mit",
+    "Guests who fill in what they are bringing will appear here.": "Gäste, die angeben, was sie mitbringen, werden hier angezeigt.",
+    "Allergies & intolerances of other guests": "Allergien & Unverträglichkeiten anderer Gäste"
 }
