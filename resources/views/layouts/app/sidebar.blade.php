@@ -7,12 +7,8 @@
         <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.header>
                 <a href="{{ route('dashboard') }}" wire:navigate class="flex w-full items-center justify-center py-3">
-                    <img
-                        x-data
-                        :src="document.documentElement.classList.contains('dark') ? '/images/logo-light.svg' : '/images/logo-dark.svg'"
-                        alt="{{ config('app.name') }}"
-                        style="height:80px;width:auto;"
-                    />
+                    <img src="/images/logo-dark.svg" alt="{{ config('app.name') }}" class="dark:hidden" style="height:80px;width:auto;" />
+                    <img src="/images/logo-light.svg" alt="{{ config('app.name') }}" class="hidden dark:block" style="height:80px;width:auto;" />
                 </a>
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
