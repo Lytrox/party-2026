@@ -56,13 +56,13 @@ class FortifyServiceProvider extends ServiceProvider
             return null;
         });
 
-        Fortify::authenticateThrough(fn () => [
-            ValidateTurnstile::class,
+        Fortify::authenticateThrough(fn () => array_filter([
+            app()->runningUnitTests() ? null : ValidateTurnstile::class,
             EnsureLoginIsNotThrottled::class,
             RedirectIfTwoFactorAuthenticatable::class,
             AttemptToAuthenticate::class,
             PrepareAuthenticatedSession::class,
-        ]);
+        ]));
     }
 
     /**
