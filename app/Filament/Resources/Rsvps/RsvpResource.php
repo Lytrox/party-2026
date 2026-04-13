@@ -32,6 +32,11 @@ class RsvpResource extends Resource
         return __('Registrations');
     }
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Registrations');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return RsvpForm::configure($schema);

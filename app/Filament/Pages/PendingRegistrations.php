@@ -26,7 +26,7 @@ class PendingRegistrations extends Page implements HasTable
 
     public static function getNavigationGroup(): ?string
     {
-        return __('Users');
+        return __('Registrations');
     }
 
     public function getTitle(): string
