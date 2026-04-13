@@ -228,5 +228,9 @@
     "Suggested transfers": "Vorgeschlagene Überweisungen",
     "Everyone is even — no transfers needed.": "Alle sind ausgeglichen – keine Überweisungen nötig.",
     "From": "Von",
-    "To": "An"
+    "To": "An",
+    "Under Maintenance": "Wartungsarbeiten",
+    ":app is currently undergoing maintenance. Please try again in a couple of seconds.": ":app befindet sich derzeit in Wartung. Bitte versuche es in ein paar Sekunden erneut.",
+    "Reload page": "Seite neu laden",
+    "Automatically reloading in :seconds second\u2026|Automatically reloading in :seconds seconds\u2026": "Automatische Aktualisierung in :seconds Sekunde\u2026|Automatische Aktualisierung in :seconds Sekunden\u2026"
 }

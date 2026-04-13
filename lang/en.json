@@ -228,5 +228,9 @@
     "Suggested transfers": "Suggested transfers",
     "Everyone is even — no transfers needed.": "Everyone is even — no transfers needed.",
     "From": "From",
-    "To": "To"
+    "To": "To",
+    "Under Maintenance": "Under Maintenance",
+    ":app is currently undergoing maintenance. Please try again in a couple of seconds.": ":app is currently undergoing maintenance. Please try again in a couple of seconds.",
+    "Reload page": "Reload page",
+    "Automatically reloading in :seconds second\u2026|Automatically reloading in :seconds seconds\u2026": "Automatically reloading in :seconds second\u2026|Automatically reloading in :seconds seconds\u2026"
 }
